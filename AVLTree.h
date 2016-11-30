@@ -24,7 +24,7 @@ private:
 		Elem<T> * right;
 		Elem<T> * left;
 		int height;
-		Elem(T k) // Создание элемента с ключом (T k). 
+		Elem(T k) // Создание элемента с ключом (T k).
 		{
 			key = k;
 			right = left = 0;
@@ -34,7 +34,7 @@ private:
 
 public:
 	Elem<T> * main_root; // Указатель на головное дерево.
-	AVLTree() // Конструктор 
+	AVLTree() // Конструктор
 	{
 		main_root = 0; // Обнуление головного указателя, так как дерево еще отсутствует.
 	}
@@ -208,6 +208,36 @@ public:
 	template<typename T> bool isEmpty(Elem<T>* root)
 	{
 		if (root == 0) return 1; else return 0;
+	}
+	template <typename T> void paintBT(main_root)
+	{
+		int gd = DETECT; //инициализируем графическое окно
+		int dm = 0;
+		initgraph(&dm, &gd, "");
+
+		int maxx = getmaxx();
+		int maxy = getmaxy();
+
+		setactivepage(0);// устанавливаем графическую страницу
+		setvisualpage(0);
+
+		setcolor(15);
+		settextstyle(0, 0, 5);
+		std::cout << "\nBynary Tree:\n";
+
+		if (IsEmpty(root))
+		{
+			std::cout << "\nForest is Empty\n";
+			moveto(100, 100);
+			outtext("Binary Tree is empty");
+		}
+		else
+		{
+			moveto(0, 0);
+			outtext("Binary Tree");
+			PaintLeafBT(5, maxx - 5, 5, root, 50, 'k'); //рисуем дерево
+		}
+		std::cout << "...............................\n";
 	}
 	~AVLTree()
 	{
