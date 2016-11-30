@@ -210,7 +210,7 @@ Elem<T> * main_root; // Указатель на головное дерево.
 	{
 		if (root == 0) return 1 else return 0;
 	}
-	template<typename T> void paintTree(Elem<T>* main_root)
+	template<typename T> void paintTree(const Elem<T>* main_root)
 	{
 		int gd = DETECT; //инициализируем графическое окно
 		int dm = 0;
@@ -236,45 +236,36 @@ Elem<T> * main_root; // Указатель на головное дерево.
 		{
 			moveto(0, 0);
 			outtext("Binary Tree");
-			PaintLeafBT(5, maxx - 5, 5, main_root, 50, 'R'); //рисуем дерево
+			paintLeafBT(5, maxx - 5, 5, main_root, 50, 'R'); //рисуем дерево
 		}
 		std::cout << "...............................\n";
 	}
-	/*
-	bool PaintLeafBT(int x1, int x2, int y, const binTree leaf, int level, char f)
-	{
-	if (IsEmpty(leaf))
-	{
-	return false;
-	}
-	char ch[2] = { 0 };
-	int x = (x1 + x2) / 2;
-	int i = 0;
 
-	ch[0] = Name(leaf);
-	moveto(x, y);
-	outtext(ch);
-
-	std::cout << f;
-	for (i = 0; i<level; i++)
+	template<typename T> bool paintLeafBT(int x1, int x2, int y, const Elem<T>* leaf, int level, char f)
 	{
-	std::cout << '|';
-	}
-	std::cout << Name(leaf) << '\n';
+		if (IsEmpty(leaf))
+		{
+			return false;
+		}
 
+		Elem<T> ch[2] = { 0 };
+		int x = (x1 + x2) / 2;
+		int i = 0;
 
+		ch[0] = leaf->key;
+		moveto(x, y);
+		outtext(ch);
 
-	if (PaintLeafBT(x1 - 5, x, y + 20, leaf->left, level - 5, 'l')) //рисуем левую ветвь
-	{
-	line(x + 2, y + 15, (x + x1) / 2 + 10, y + 25);
-	}
-	if (PaintLeafBT(x, x2 + 5, y + 20, leaf->right, level - 5, 'r'))//рисуем правую ветвь
-	{
-	line(x + 2, y + 15, (x + x2) / 2 - 2, y + 25);
-	}
-	return true;
-	}
-	*/
+		if (paintLeafBT(x1 - 5, x, y + 20, leaf->left, level - 5, 'l')) //рисуем левую ветвь
+		{
+			line(x + 2, y + 15, (x + x1) / 2 + 10, y + 25);
+		}
+		if (PaintLeafBT(x, x2 + 5, y + 20, leaf->right, level - 5, 'r'))//рисуем правую ветвь
+		{
+			line(x + 2, y + 15, (x + x2) / 2 - 2, y + 25);
+		}
+		return true;
+	};
 	~AVLTree ()
 	{
 		delTree (main_root);
