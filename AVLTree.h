@@ -38,11 +38,11 @@ Elem<T> * main_root; // Указатель на головное дерево.
 	{
 		main_root = 0; // Обнуление головного указателя, так как дерево еще отсутствует.
 	}
-	template<typename T> int height (Elem<T> * root) // Функция, возвращающая высоту текущего поддерева.
+	template<typename T> int height // Функция, возвращающая высоту текущего поддерева.
 	{
 		return root ? root->height : 0;
 	}
-	template<typename T> int bfactor (Elem<T> * root) // Функция, возвращающая фактор баланса текущего поддерева.
+	template<typename T> int evbf (Elem<T> * root) // Функция, возвращающая фактор баланса текущего поддерева.
 	{
 		return height(root->right) - height(root->left);
 	}
@@ -72,13 +72,14 @@ Elem<T> * main_root; // Указатель на головное дерево.
 	}
 	template<typename T> Elem<T> * balance (Elem<T> * root) // Функция, балансирующая текущеее дерево.
 	{
-		cout << "Фактор баланса в текущем дереве - " << bfactor(root) << endl;
-		printTree(root,0);
+		cout << "Фактор баланса в текущем дереве - " << evbf(root) << endl;
+		printTree(root, 0);
+		//TODO: printTree(root,0);
 		cout << endl;
-		if (bfactor(root) == 2) // Если высота левого поддерева текущего корня превышает высоту правого на 2.
+		if (evbf(root) == 2) // Если высота левого поддерева текущего корня превышает высоту правого на 2.
 		{
 			cout << "Требуется балансировка." << endl;
-			if (bfactor(root->right) < 0) 
+			if (evbf(root->right) < 0) 
 				root->right = rotleft(root->right);
 			return rotright (root);
 			cout <<"Дерево после балансировки: " << endl;
@@ -88,7 +89,7 @@ Elem<T> * main_root; // Указатель на головное дерево.
 		if (bfactor(root) == -2) // Если высота правого поддерева текущего корня превышает высоту левого на 2.
 		{
 			cout << "Требуется балансировка." << endl;
-			if(bfactor(root->left) > 0)
+			if(evbf(root->left) > 0)
 				root->left = rotright(root->left);
 			return rotleft(root);
 		}
@@ -204,6 +205,10 @@ Elem<T> * main_root; // Указатель на головное дерево.
 		}
 		else
 			return 0;
+	}
+	template<typename T> bool isEmpty(Elem<T>* root)
+	{
+		if (root == 0) return 1 else return 0;
 	}
 	~AVLTree ()
 	{
