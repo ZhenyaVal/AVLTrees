@@ -286,6 +286,64 @@ public:
 }
 
 // Дополнительные функции (если нужно прицеплять готовое решение)
+template <typename T> void read_console() // Функция построения дерева через консоль.
+{
+	int ln;
+	cout << "Введите количество элементов в АВЛ-дереве: ";
+	cin >> ln;
+	while (ln < 1 || cin.fail())
+	{
+		cout << "Вы ввели неверное количество элементов. Попробуйте снова: ";
+		cin.clear();
+		cin.sync();
+		cin >> ln;
+	}
+	int i = 0;
+	cout << "Введите элементы через пробел: ";
+	while (i < ln)
+	{
+		cin >> el;
+		while (cin.fail())
+		{
+			cout << "Текущий элемент задан неверно. Попробуйте снова: ";
+			cin.clear();
+			cin.sync();
+			cin >> el;
+		}
+		i++;
+		cout << "Добавляем элемент [" << el << "] в АВЛ." << endl;
+		AVL.main_root = AVL.insert(AVL.main_root, el);
+		cout << "============================================" << endl;
+		cout << "АВЛ-БДП после добавления элемента [" << el << "]." << endl;
+		AVL.printTree(AVL.main_root, 0);
+		cout << "============================================" << endl;
+	}
+	cout << "Пустое дерево?" << AVL.isEmpty(AVL.main_root) << endl;
+	cout << "Конечный вид БДП:" << endl;
+	AVL.paintBT(AVL.main_root);
+}
+template <typename T> void read_file(ifstream & fin) // Функуция построения дерева через файл.
+{
+	while (!(fin.eof())) // пока не достигли конца файл, выполняем данный цикл.
+	{
+		fin >> el; // заносим считанное из файла значение в переменную el
+		if (fin.fail())
+		{
+			cout << "1 или более элементов заданы неверно. Программа будет завершена." << endl;
+			system("pause");
+			exit(1);
+		}
+		cout << "Добавляем элемент [" << el << "] в БДП." << endl;
+		AVL.main_root = AVL.insert(AVL.main_root, el);
+		cout << "============================================" << endl;
+		cout << "АВЛ-БДП после добавления элемента [" << el << "]." << endl;
+		AVL.printTree(AVL.main_root, 0);
+		cout << "============================================" << endl;
+	}
+	cout << "Пустое дерево?" << AVL.isEmpty(AVL.main_root) << endl;
+	cout << "Конечный вид БДП:" << endl;
+	AVL.printTree(AVL.main_root, 0);
+}
 	~AVLTree()
 	{
 		delTree(main_root);
