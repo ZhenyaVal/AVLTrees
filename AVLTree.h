@@ -73,27 +73,27 @@ public:
 	}
 	template<typename T> Elem<T> * balance(Elem<T> * root) // Функция балансировки текущего дерева.
 	{
-		cout << "������ ������� � ������� ������ - " << bfactor(root) << endl;
+		cout << "Фактор баланса в текущем дереве --- " << bfactor(root) << endl;
 		printTree(root, 0);
 		cout << endl;
 		if (bfactor(root) == 2) // Если высота левого поддерева текущего корня больше правого на 2.
 		{
-			cout << "��������� ������������." << endl;
+			cout << "Балансировка требуется." << endl;
 			if (bfactor(root->right) < 0)
 				root->right = rotleft(root->right);
 			return rotright(root);
-			cout << "������ ����� ������������: " << endl;
+			cout << "Дерево после балансировки: " << endl;
 			printTree(root, 0);
 			cout << endl;
 		}
 		if (bfactor(root) == -2) // Если высота правого поддерева текущего корня больше левого на 2.
 		{
-			cout << "��������� ������������." << endl;
+			cout << "Балансировка требуется." << endl;
 			if (bfactor(root->left) > 0)
 				root->left = rotright(root->left);
 			return rotleft(root);
 		}
-		cout << "������������ �� ���������." << endl;
+		cout << "Балансировка не требуется." << endl;
 		return root;
 	}
 	template<typename T> Elem<T> * insert(Elem<T> * root, T key) // Функция вставки элемента в дерево.
@@ -173,12 +173,12 @@ public:
 			Elem<T> * el = findel(root, key);
 			if (el)
 			{
-				cout << "�������� ������. ������� ���. " << endl;
+				cout << "Элемент найден. Удаляем его. " << endl;
 				main_root = remove(root, key);
 			}
 			else
 			{
-				cout << "������� �� ������. ��������� ���. " << endl;
+				cout << "Элемент не найден. Вставляем его. " << endl;
 				main_root = insert(root, key);
 			}
 		}
@@ -190,13 +190,13 @@ public:
 			Elem<T> * el = root;
 			if (key < root->key)
 			{
-				cout << "��������������� ������ - " << root->key << ". [" << key << "] < [" << root->key << "], �������� �� ����� �����." << endl;
+				cout << "Текущий корень --- " << root->key << ". [" << key << "] < [" << root->key << "], Движемся по левой ветви." << endl;
 				el = findel(root->left, key);
 			}
 			else
 				if (key > root->key)
 				{
-					cout << "��������������� ������ - " << root->key << ". [" << key << "] > [" << root->key << "], �����, �������� �� ������ �����." << endl;
+					cout << "Текущий корень --- " << root->key << ". [" << key << "] > [" << root->key << "],  Движемся по правой ветви." << endl;
 					el = findel(root->right, key);
 				}
 				else
