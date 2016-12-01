@@ -1,9 +1,9 @@
 /*---------------------------------------------------------
-*    Заголовочный файл, реализующий шаблонный класс --- Adelson-Velskii Tree  (AVL -- tree)
-*       написана Eugenue Meldin(1),Artemii Mikhailov(2), Olga Nosova(3) 03.11.2016
-*     лежит в пространстве имён MyMath
+*    Р—Р°РіРѕР»РѕРІРѕС‡РЅС‹Р№ С„Р°Р№Р», СЂРµР°Р»РёР·РёСѓСЋС‰РёР№ С€Р°Р±Р»РѕРЅРЅС‹Р№ РєР»Р°СЃСЃ --- Adelson-Velskii Tree  (AVL -- tree)
+*       РЅР°РїРёСЃР°РЅ Eugenue Meldin(1),Artemii Mikhailov(2), Olga Nosova(3) 01.12.2016
 (1) SpbETU, evg-meldin[]ya.ru
 (2) SpbETU,
+(3) SpbETU,
 *--------------------------------------------------------*/
 #include <iostream>
 #pragma once
@@ -15,16 +15,16 @@
 #pragma comment(lib,"openbgi_vc90x.lib")
 //setlocale(LC_ALL, "rus");
 using namespace std;
-template<typename T> class AVLTree // Объявление шаблонного класса.
+template<typename T> class AVLTree // РћР±СЉСЏРІР»РµРЅРёРµ С€Р°Р±Р»РѕРЅРЅРѕРіРѕ РєР»Р°СЃСЃР°
 {
 private:
-	template<typename T> struct Elem // Структура элементов БДП-АВЛ
+	template<typename T> struct Elem // РЎС‚СЂСѓРєС‚СѓСЂР° СЌР»РµРјРµРЅС‚Р° РђР’Р›-РґРµСЂРµРІР°
 	{
 		T key;
 		Elem<T> * right;
 		Elem<T> * left;
 		int height;
-		Elem(T k) // Создание элемента с ключом (T k).
+		Elem(T k) // РЎРѕР·РґР°РЅРёРµ СЌР»РµРјРµРЅС‚Р° СЃ РєР»СЋС‡РѕРј (T k).
 		{
 			key = k;
 			right = left = 0;
@@ -33,26 +33,27 @@ private:
 	};
 
 public:
-	Elem<T> * main_root; // Указатель на головное дерево.
-	AVLTree() // Конструктор
+	//РўРµРєСѓС‰РµРµ РґРµСЂРµРІРѕ = РґРµСЂРµРІРѕ СЃ РєРѕСЂРЅРµРј РІ root
+	Elem<T> * main_root; // РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РіРѕР»РѕРІРЅРѕРµ РґРµСЂРµРІРѕ.
+	AVLTree() // РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 	{
-		main_root = 0; // Обнуление головного указателя, так как дерево еще отсутствует.
+		main_root = 0; // РћР±РЅСѓР»РµРЅРёРµ РіРѕР»РѕРІРЅРѕРіРѕ СѓРєР°Р·Р°С‚РµР»СЏ, С‚Р°Рє РєР°Рє РґРµСЂРµРІРѕ РµС‰С‘ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚.
 	}
-	template<typename T> int height(Elem<T> * root) // Функция, возвращающая высоту текущего поддерева.
+	template<typename T> int height(Elem<T> * root) // Р¤СѓРЅРєС†РёСЏ, РІРѕР·РІСЂР°С‰Р°СЋС‰Р°СЏ РІС‹СЃРѕС‚Сѓ С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
 		return root ? root->height : 0;
 	}
-	template<typename T> int bfactor(Elem<T> * root) // Функция, возвращающая фактор баланса текущего поддерева.
+	template<typename T> int bfactor(Elem<T> * root) // Р¤СѓРЅРєС†РёСЏ, РІРѕР·РІСЂР°С‰Р°СЋС‰Р°СЏ С„Р°РєС‚РѕСЂ Р±Р°Р»Р°РЅСЃР° С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
 		return height(root->right) - height(root->left);
 	}
-	template<typename T> int fixheight(Elem<T> * root) // Функция, фиксирующая высоту текущего поддерева.
+	template<typename T> int fixheight(Elem<T> * root) // Р¤СѓРЅРєС†РёСЏ, С„РёРєСЃРёСЂСѓСЋС‰Р°СЏ РІС‹СЃРѕС‚Сѓ С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
 		int rootl = height(root->left);
 		int rootr = height(root->right);
 		return (rootl > rootr ? rootl : rootr) + 1;
 	}
-	template<typename T> Elem<T> * rotleft(Elem<T> * root) // Функция поворта левой ветви текущего корня вокруг самого корня.
+	template<typename T> Elem<T> * rotleft(Elem<T> * root) // Р¤СѓРЅРєС†РёСЏ Р»РµРІРѕРіРѕ РїРѕРІРѕСЂРѕС‚Р° С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
 		Elem<T> * q = root->left;
 		root->left = q->right;
@@ -61,7 +62,7 @@ public:
 		q->height = fixheight(q);
 		return q;
 	}
-	template<typename T> Elem<T> * rotright(Elem<T> * root) // Функция поворота правой ветви текущего корня вокруг самого корня.
+	template<typename T> Elem<T> * rotright(Elem<T> * root) // Р¤СѓРЅРєС†РёСЏ РїСЂР°РІРѕРіРѕ РїРѕРІРѕСЂРѕС‚Р° С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
 		Elem<T> * q = root->right;
 		root->right = q->left;
@@ -70,58 +71,58 @@ public:
 		q->height = fixheight(q);
 		return q;
 	}
-	template<typename T> Elem<T> * balance(Elem<T> * root) // Функция, балансирующая текущеее дерево.
+	template<typename T> Elem<T> * balance(Elem<T> * root) // Р¤СѓРЅРєС†РёСЏ Р±Р°Р»Р°РЅСЃРёСЂРѕРІРєРё С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
-		cout << "Фактор баланса в текущем дереве - " << bfactor(root) << endl;
+		cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - " << bfactor(root) << endl;
 		printTree(root, 0);
 		cout << endl;
-		if (bfactor(root) == 2) // Если высота левого поддерева текущего корня превышает высоту правого на 2.
+		if (bfactor(root) == 2) // Р•СЃР»Рё РІС‹СЃРѕС‚Р° Р»РµРІРѕРіРѕ РїРѕРґРґРµСЂРµРІР° С‚РµРєСѓС‰РµРіРѕ РєРѕСЂРЅСЏ Р±РѕР»СЊС€Рµ РїСЂР°РІРѕРіРѕ РЅР° 2.
 		{
-			cout << "Требуется балансировка." << endl;
+			cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ." << endl;
 			if (bfactor(root->right) < 0)
 				root->right = rotleft(root->right);
 			return rotright(root);
-			cout << "Дерево после балансировки: " << endl;
+			cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << endl;
 			printTree(root, 0);
 			cout << endl;
 		}
-		if (bfactor(root) == -2) // Если высота правого поддерева текущего корня превышает высоту левого на 2.
+		if (bfactor(root) == -2) // Р•СЃР»Рё РІС‹СЃРѕС‚Р° РїСЂР°РІРѕРіРѕ РїРѕРґРґРµСЂРµРІР° С‚РµРєСѓС‰РµРіРѕ РєРѕСЂРЅСЏ Р±РѕР»СЊС€Рµ Р»РµРІРѕРіРѕ РЅР° 2.
 		{
-			cout << "Требуется балансировка." << endl;
+			cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ." << endl;
 			if (bfactor(root->left) > 0)
 				root->left = rotright(root->left);
 			return rotleft(root);
 		}
-		cout << "Балансировка не требуется." << endl;
+		cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ." << endl;
 		return root;
 	}
-	template<typename T> Elem<T> * insert(Elem<T> * root, T key) // Функция, вставляющая элемент с заданным ключом в дерево.
+	template<typename T> Elem<T> * insert(Elem<T> * root, T key) // Р¤СѓРЅРєС†РёСЏ РІСЃС‚Р°РІРєРё СЌР»РµРјРµРЅС‚Р° РІ РґРµСЂРµРІРѕ.
 	{
 		if (!root) return new Elem<T>(key);
-		if (key < root->key) // Ключ меньше
+		if (key < root->key) // РљР»СЋС‡ РјРµРЅСЊС€Рµ
 		{
 			root->left = insert(root->left, key);
 			root->height = fixheight(root);
 		}
-		else // Ключ больше или равен.
+		else // РљР»СЋС‡ Р±РѕР»СЊС€Рµ РёР»Рё СЂР°РІРµРЅ.
 		{
 			root->right = insert(root->right, key);
 			root->height = fixheight(root);
 		}
 		return balance(root);
 	}
-	template<typename T> Elem<T> * findmin(Elem<T> * root) // Поиск минимального элемента текущего дерева.
+	template<typename T> Elem<T> * findmin(Elem<T> * root) // РџРѕРёСЃРє РјРёРЅРёРјСѓРјР° РІ С‚РµРєСѓС‰РµРј РґРµСЂРµРІРµ.
 	{
 		return root->left ? findmin(root->left) : root;
 	}
-	template<typename T> Elem<T> * removemin(Elem<T> * root) // Удаление из дерева мин. элемента.
+	template<typename T> Elem<T> * removemin(Elem<T> * root) // РЈРґР°Р»РµРЅРёРµ РјРёРЅРёРјСѓРјР° РІ РїРѕРґРґРµСЂРµРІРµ.
 	{
 		if (root->left == 0)
 			return root->right;
 		root->left = removemin(root->left);
 		return balance(root);
 	}
-	template<typename T> Elem<T> * remove(Elem<T> * root, T key) // Удаление элемента с заданным ключом.
+	template<typename T> Elem<T> * remove(Elem<T> * root, T key) // РЈРґР°Р»РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° СЃ С‚РµРєСѓС‰РёРј РєР»СЋС‡РѕРј.
 	{
 		if (!root)
 			return 0;
@@ -145,7 +146,7 @@ public:
 			}
 		return balance(root);
 	}
-	template<typename T> void delTree(Elem<T> * root) // Удаление дерева.
+	template<typename T> void delTree(Elem<T> * root) // РЈРґР°Р»РµРЅРёРµ С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°.
 	{
 		if (root)
 		{
@@ -154,7 +155,7 @@ public:
 			delete root;
 		}
 	}
-	template<typename T> void printTree(Elem<T> * root, int lvl)
+	template<typename T> void printTree(Elem<T> * root, int lvl) // Р’С‹РІРѕРґ "Р»РµРІРѕРіРѕ РґРµСЂРµРІР°" РІ РєРѕРЅСЃРѕР»СЊ
 	{
 		if (root)
 		{
@@ -165,37 +166,37 @@ public:
 			printTree(root->left, lvl);
 		}
 	}
-	template<typename T> void del_ins(Elem<T> * root, T key)
+	template<typename T> void del_ins(Elem<T> * root, T key) // РџРѕРёСЃРє СЌР»РµРјРµРЅС‚Р° РІ РґРµСЂРµРІРµ: СѓРґР°Р»РµРЅРёРµ РµСЃР»Рё РµСЃС‚СЊ Рё РІСЃС‚Р°РІРєР°, РµСЃР»Рё РЅРµС‚.
 	{
 		if (root)
 		{
 			Elem<T> * el = findel(root, key);
 			if (el)
 			{
-				cout << "Элемента найден. Удаляем его. " << endl;
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. " << endl;
 				main_root = remove(root, key);
 			}
 			else
 			{
-				cout << "Элемент не найден. Вставляем его. " << endl;
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ. " << endl;
 				main_root = insert(root, key);
 			}
 		}
 	}
-	template<typename T> Elem<T> * findel(Elem<T> * root, T key) // Поиск элемента по дереву.
+	template<typename T> Elem<T> * findel(Elem<T> * root, T key) // Р¤СѓРЅРєС†РёСЏ РїРѕРёСЃРєР° СЌР»РµРјРµРЅС‚Р° РїРѕ РґРµСЂРµРІСѓ.
 	{
 		if (root)
 		{
 			Elem<T> * el = root;
 			if (key < root->key)
 			{
-				cout << "Рассматриваемый корень - " << root->key << ". [" << key << "] < [" << root->key << "], движемся по левой ветви." << endl;
+				cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - " << root->key << ". [" << key << "] < [" << root->key << "], пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ." << endl;
 				el = findel(root->left, key);
 			}
 			else
 				if (key > root->key)
 				{
-					cout << "Рассматриваемый корень - " << root->key << ". [" << key << "] > [" << root->key << "], корня, движемся по правой ветви." << endl;
+					cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ - " << root->key << ". [" << key << "] > [" << root->key << "], пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ." << endl;
 					el = findel(root->right, key);
 				}
 				else
@@ -205,20 +206,20 @@ public:
 		else
 			return 0;
 	}
-	template<typename T> bool isEmpty(Elem<T>* root)
+	template<typename T> bool isEmpty(Elem<T>* root) //РџСЂРѕРІРµСЂРєР° РЅР° РїСѓСЃС‚РѕС‚Сѓ С‚РµРєСѓС‰РµРіРѕ РґРµСЂРµРІР°
 	{
 		if (root == 0) return 1; else return 0;
 	}
-	template <typename T> void paintBT(Elem<T>*main_root)
+	template <typename T> void paintBT(Elem<T>*main_root) // РћС‚СЂРёСЃРѕРІРєР° РєСЂР°СЃРёРІРѕРіРѕ РђР’Р›
 	{
-		int gd = DETECT; //шэшЎшрышчшЁєхь уЁрЇшўхёъюх юъэю
+		int gd = DETECT; //РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РіСЂР°С„РёС‡РµСЃРєРѕРіРѕ СЂРµР¶РёРјР°
 		int dm = 0;
 		initgraph(&dm, &gd, "");
 
 		int maxx = getmaxx();
 		int maxy = getmaxy();
 
-		setactivepage(0);// єёЄрэртыштрхь уЁрЇшўхёъє? ёЄЁрэшЎє
+		setactivepage(0);
 		setvisualpage(0);
 
 		setcolor(15);
@@ -235,28 +236,27 @@ public:
 		{
 			moveto(0, 0);
 			outtext("Binary Tree");
-			PaintLeafBT(5, maxx - 5, 5, main_root, 50, 'k'); //Ёшёєхь фхЁхтю
+			PaintLeafBT(5, maxx - 5, 5, main_root, 50, 'k');
 		}
 		std::cout << "...............................\n";
 	}
-	template <typename T>	bool PaintLeafBT(int x1, int x2, int y,Elem<T>* leaf, int level, char f)
+	template <typename T>	bool PaintLeafBT(int x1, int x2, int y,Elem<T>* leaf, int level, char f) //Р¤СѓРЅРєС†РёСЏ РѕС‚СЂРёСЃРѕРІРєРё Р»РёСЃС‚Р°
 	{
 		if (isEmpty(leaf))
 		{
 			return false;
 		}
-		//char ch[2] = { 0 };
-		char ch[2]={0};
+		char ch[2] = { 0 };
 		int x = (x1 + x2) / 2;
 		int i = 0;
 		ch[0] = leaf->key;
 		moveto(x, y);
 		outtext(ch);
-		if (PaintLeafBT(x1 - 5, x, y + 20, leaf->left, level - 5, 'l')) //Ёшёєхь ыхтє? тхЄт№
+		if (PaintLeafBT(x1 - 5, x, y + 20, leaf->left, level - 5, 'l')) //Р РёСЃСѓРµРј Р»РµРІСѓСЋ РІРµС‚РІСЊ
 		{
 			line(x + 2, y + 15, (x + x1) / 2 + 10, y + 25);
 		}
-		if (PaintLeafBT(x, x2 + 5, y + 20, leaf->right, level - 5, 'r'))//Ёшёєхь яЁртє? тхЄт№
+		if (PaintLeafBT(x, x2 + 5, y + 20, leaf->right, level - 5, 'r'))//Р РёСЃСѓРµРј РїСЂР°РІСѓСЋ РІРµС‚РІСЊ
 		{
 			line(x + 2, y + 15, (x + x2) / 2 - 2, y + 25);
 		}
